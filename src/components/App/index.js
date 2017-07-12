@@ -22,10 +22,10 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const {allBooks} = this.state
+    const {allBooks} = this.state;
     return (
       <div className="app">
-        <Route exact path="/search" component={SearchBooks}></Route>
+        <Route exact path="/search" render={() => <SearchBooks allBooks={allBooks} />}></Route>
         <Route exact path="/" render={() => <ListBooks allBooks={allBooks} />}></Route>
       </div>
     );
