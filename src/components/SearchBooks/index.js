@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import escapeRegExp from 'escape-string-regexp';
 
+import BookShelf from '../BookShelf';
+
 export default class SearchBooks extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +20,16 @@ export default class SearchBooks extends Component {
     const {query} = this.state;
     const {allBooks} = this.props;
 
+    let searchBooks;
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i');
+      searchBooks = allBooks.filter(book => {
+        return match.test(book.title);
+      });
+    } else {
+      searchBooks = allBooks;
+    }
+
     return(
       <div className="search-books">
         <div className="search-books-bar">
@@ -31,7 +43,7 @@ export default class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <BookShelf title="Search Results" shelfBooks={searchBooks} />
         </div>
       </div>
     );
