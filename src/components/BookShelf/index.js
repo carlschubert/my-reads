@@ -3,12 +3,7 @@ import React from 'react';
 import Book from '../Book';
 
 const BookShelf = props => {
-  const {title, shelfBooks} = props;
-  const formattedTitles = {
-    currentlyReading: 'Currently Reading',
-    wantToRead: 'Want to Read',
-    read: 'Read'
-  };
+  const {title, shelfBooks, handleSelect} = props;
 
   return(
     <div className="bookshelf">
@@ -18,9 +13,11 @@ const BookShelf = props => {
           {shelfBooks.map(book => {
             return(
               <li key={book.id}>
-                <Book book={book} />
+                <Book
+                  book={book}
+                  handleSelect={handleSelect} />
               </li>
-            )
+            );
           })}
         </ol>
       </div>

@@ -1,13 +1,22 @@
 import React from 'react';
 
 const Book = props => {
-  const {book} = props;
+  const {book, handleSelect} = props;
   return(
     <div className="book">
       <div className="book-top">
-        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+        <div
+          className="book-cover"
+          style={{
+            width: 128,
+            height: 193,
+            backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+          }}>
+        </div>
         <div className="book-shelf-changer">
-          <select>
+          <select
+            onChange={(e) => handleSelect(book, e.target.value)}
+            value={book.shelf}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>

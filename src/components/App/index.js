@@ -6,18 +6,32 @@ import './App.css';
 import ListBooks from '../ListBooks';
 import SearchBooks from '../SearchBooks';
 
-class BooksApp extends React.Component {
+export default class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allBooks: []
+      allBooks: [],
     };
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentDidMount() {
     BooksAPI.getAll()
       .then(books => {
-        this.setState({allBooks: books});
+        this.setState({
+          allBooks: books
+        });
+      });
+  }
+
+  handleSelect(book, shelf) {
+    BooksAPI.update(book, shelf)
+      .then(() => {
+        const newBooks = this.state.allBooks.slice();
+        newBooks.find(oldBook => {
+          return oldBook.id === book.id;
+        }).shelf = shelf;
+        this.setState({allBooks: newBooks});
       });
   }
 
@@ -25,11 +39,19 @@ class BooksApp extends React.Component {
     const {allBooks} = this.state;
     return (
       <div className="app">
-        <Route exact path="/search" render={() => <SearchBooks allBooks={allBooks} />}></Route>
-        <Route exact path="/" render={() => <ListBooks allBooks={allBooks} />}></Route>
+        <Route exact path="/search" render={() => (
+          <SearchBooks
+            allBooks={allBooks}
+            handleSelect={this.handleSelect}
+          />)}>
+        </Route>
+        <Route exact path="/" render={() => (
+          <ListBooks
+            allBooks={allBooks}
+            handleSelect={this.handleSelect}
+          />)}>
+        </Route>
       </div>
     );
   }
 }
-
-export default BooksApp;

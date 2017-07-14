@@ -18,7 +18,7 @@ export default class SearchBooks extends Component {
 
   render() {
     const {query} = this.state;
-    const {allBooks} = this.props;
+    const {allBooks, handleSelect} = this.props;
 
     let searchBooks;
     if (query) {
@@ -43,7 +43,10 @@ export default class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <BookShelf title="Search Results" shelfBooks={searchBooks} />
+          <BookShelf
+            title="Search Results"
+            shelfBooks={searchBooks}
+            handleSelect={handleSelect} />
         </div>
       </div>
     );
