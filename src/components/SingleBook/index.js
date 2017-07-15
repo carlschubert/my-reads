@@ -38,15 +38,17 @@ export default class SingleBook extends Component {
     const {handleSelect} = this.props;
     const {selectedBook} = this.state;
     return(
-      <div>
+      <div className="single_book">
+        <div>
+          <Link
+            className="single_book_back"
+            to='/'></Link>
+        </div>
         {
           (Object.keys(selectedBook).length > 0)
             ? <Book book={selectedBook} handleSelect={handleSelect} />
             : null
         }
-        <div>
-          <Link to='/'></Link>
-        </div>
       </div>
     );
   }
