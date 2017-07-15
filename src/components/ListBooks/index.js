@@ -4,19 +4,26 @@ import {Link} from 'react-router-dom';
 import BookShelf from '../BookShelf';
 import './list_books.css';
 
+const TITLES = {
+  currentlyReading: 4,
+  wantToRead: 3,
+  read: 2,
+  none: 1
+};
+
 const ListBooks = props => {
   const {allBooks, handleSelect} = props;
   const bookShelf = allBooks.reduce((shelf, book) => {
     shelf[book.shelf] ? shelf[book.shelf].push(book) : shelf[book.shelf] = [book];
     return shelf;
   }, {});
-
-  const formattedTitles = {
-    currentlyReading: 'Currently Reading',
-    wantToRead: 'Want to Read',
-    read: 'Read',
-    none: 'Not Assigned'
-  };
+  const titlesOrder = Object.keys(bookShelf).sort((a, b) => {
+    if (TITLES[a] && (TITLES[b])) {
+      return TITLES[b] - TITLES[a];
+    } else {
+      return 0;
+    }
+  });
 
   return(
     <div className="list-books">
@@ -25,11 +32,16 @@ const ListBooks = props => {
       </div>
       <div className="list-books-content">
         <div>
-          {Object.keys(bookShelf).map((shelf, index) => {
+          {titlesOrder.map((shelf, index) => {
             return(
               <div key={index}>
                 <BookShelf
-                  title={formattedTitles[shelf]}
+                  title={shelf
+                    // insert a space before all caps
+                    .replace(/([A-Z])/g, ' $1')
+                    // uppercase the first character
+                    .replace(/^./, first => first.toUpperCase())
+                  }
                   shelfBooks={bookShelf[shelf]}
                   handleSelect={handleSelect} />
               </div>
