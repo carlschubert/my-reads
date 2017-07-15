@@ -36,12 +36,7 @@ const ListBooks = props => {
             return(
               <div key={index}>
                 <BookShelf
-                  title={shelf
-                    // insert a space before all caps
-                    .replace(/([A-Z])/g, ' $1')
-                    // uppercase the first character
-                    .replace(/^./, first => first.toUpperCase())
-                  }
+                  title={shelf}
                   shelfBooks={bookShelf[shelf]}
                   handleSelect={handleSelect} />
               </div>

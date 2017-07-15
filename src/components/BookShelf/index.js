@@ -5,6 +5,11 @@ import './book_shelf.css';
 
 const BookShelf = props => {
   const {title, shelfBooks, handleSelect} = props;
+  const regularTitle = title
+    // insert a space before all caps
+    .replace(/([A-Z])/g, ' $1')
+    // uppercase the first character
+    .replace(/^./, first => first.toUpperCase());
 
   return(
     <div className="bookshelf">
