@@ -1,18 +1,21 @@
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+
 const Book = props => {
   const {book, handleSelect} = props;
   return(
     <div className="book">
       <div className="book-top">
-        <div
+        <Link
+          to={`/books/${book.id}`}
           className="book-cover"
           style={{
             width: 128,
             height: 193,
             backgroundImage: `url(${book.imageLinks.smallThumbnail})`
           }}>
-        </div>
+        </Link>
         <div className="book-shelf-changer">
           <select
             onChange={(e) => handleSelect(book, e.target.value)}

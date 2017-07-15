@@ -5,6 +5,7 @@ import * as BooksAPI from '../../BooksAPI';
 import './App.css';
 import ListBooks from '../ListBooks';
 import SearchBooks from '../SearchBooks';
+import SingleBook from '../SingleBook';
 
 export default class BooksApp extends React.Component {
   constructor(props) {
@@ -51,6 +52,9 @@ export default class BooksApp extends React.Component {
             handleSelect={this.handleSelect}
           />)}>
         </Route>
+        <Route
+          path="/books/:bookId"
+          render={(params) => <SingleBook params={params} handleSelect={this.handleSelect} />} />
       </div>
     );
   }
