@@ -3,6 +3,11 @@ import React from 'react';
 import Book from '../Book';
 import './book_shelf.css';
 
+const onDrop = (event, shelf, handleSelect) => {
+  const bookId = event.dataTransfer.getData('bookId');
+  handleSelect(bookId, shelf);
+};
+
 const BookShelf = props => {
   const {title, shelfBooks, handleSelect} = props;
   const regularTitle = title
@@ -12,8 +17,12 @@ const BookShelf = props => {
     .replace(/^./, first => first.toUpperCase());
 
   return(
-    <div className="bookshelf">
-      <h2 className="bookshelf-title">{title}</h2>
+    <div
+      className="bookshelf"
+      onDrop={(e) => onDrop(e)}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => onDrop(e, title, handleSelect)}>
+      <h2 className="bookshelf-title">{regularTitle}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
           {shelfBooks.map(book => {

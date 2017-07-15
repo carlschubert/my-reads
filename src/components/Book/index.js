@@ -3,10 +3,17 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './book.css';
 
+const drag = (event, bookId) => {
+  event.dataTransfer.setData('bookId', bookId);
+};
+
 const Book = props => {
   const {book, handleSelect} = props;
   return(
-    <div className="book">
+    <div
+      className="book"
+      draggable="true"
+      onDragStart={(e) => drag(e, book.id)}>
       <div className="book-top">
         <Link
           to={`/books/${book.id}`}
