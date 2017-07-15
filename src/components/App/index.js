@@ -25,12 +25,12 @@ export default class BooksApp extends React.Component {
       });
   }
 
-  handleSelect(book, shelf) {
-    BooksAPI.update(book, shelf)
+  handleSelect(bookId, shelf) {
+    BooksAPI.update(bookId, shelf)
       .then(() => {
         const newBooks = this.state.allBooks.slice();
         newBooks.find(oldBook => {
-          return oldBook.id === book.id;
+          return oldBook.id === bookId;
         }).shelf = shelf;
         this.setState({allBooks: newBooks});
       });
