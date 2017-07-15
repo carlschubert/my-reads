@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Book from '../Book';
+import './book_shelf.css';
 
 const BookShelf = props => {
   const {title, shelfBooks, handleSelect} = props;

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import BookShelf from '../BookShelf';
+import './list_books.css';
 
 const ListBooks = props => {
   const {allBooks, handleSelect} = props;

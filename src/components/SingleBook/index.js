@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 import * as BooksAPI from '../../BooksAPI';
 import Book from '../Book';
+import './single_book.css';
 
 export default class SingleBook extends Component {
   constructor(props) {

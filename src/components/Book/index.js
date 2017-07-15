@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Link} from 'react-router-dom';
+import './book.css';
 
 const Book = props => {
   const {book, handleSelect} = props;

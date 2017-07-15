@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import escapeRegExp from 'escape-string-regexp';
 
 import BookShelf from '../BookShelf';
+import './search_books.css';
 
 export default class SearchBooks extends Component {
   constructor(props) {
