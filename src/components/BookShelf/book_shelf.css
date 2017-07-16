@@ -28,3 +28,7 @@
 .bookshelf-books {
   text-align: center;
 }
+
+.draghover {
+  background-color: grey;
+}

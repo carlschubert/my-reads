@@ -1,10 +1,11 @@
 import React from 'react';
-
 import {Link} from 'react-router-dom';
+
 import './book.css';
 
 const drag = (event, bookId) => {
   event.dataTransfer.setData('bookId', bookId);
+  event.dataTransfer.setDragImage(event.currentTarget, 0, 0);
 };
 
 const Book = props => {
