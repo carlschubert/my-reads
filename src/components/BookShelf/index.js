@@ -14,9 +14,9 @@ export default class BookShelf extends Component {
     this.onDragOver = this.onDragOver.bind(this);
   }
 
-  onDrop(event, shelf, handleSelect) {
-    const bookId = event.dataTransfer.getData('bookId');
-    handleSelect(bookId, shelf);
+  onDrop(event, shelf) {
+    const book = JSON.parse(event.dataTransfer.getData('text'));
+    this.props.handleSelect(book, shelf);
     this.onDragEnd();
   }
 
@@ -55,7 +55,7 @@ export default class BookShelf extends Component {
             this.onDragOver();
           }}
           onDragEnter={this.onDragOver}
-          onDrop={(e) => this.onDrop(e, title, handleSelect)}
+          onDrop={(e) => this.onDrop(e, title)}
           onDragLeave={this.onDragEnd}
           onDragEnd={this.onDragEnd}
         >

@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 
 import './book.css';
 
-const drag = (event, bookId) => {
-  event.dataTransfer.setData('bookId', bookId);
+const drag = (event, book) => {
+  event.dataTransfer.setData('text', JSON.stringify(book));
   event.dataTransfer.setDragImage(event.currentTarget, 0, 0);
 };
 
