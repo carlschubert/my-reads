@@ -18,14 +18,6 @@ export default class SingleBook extends Component {
     this.fetchBook(bookId);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextBookId = nextProps.params.match.bookId;
-    const currentBookId = this.props.params.match.params.bookId;
-    if (nextBookId !== currentBookId) {
-      this.fetchBook(nextBookId);
-    }
-  }
-
   fetchBook(id) {
     BooksAPI.get(id)
       .then(res => res)
