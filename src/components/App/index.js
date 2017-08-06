@@ -13,8 +13,7 @@ export default class BooksApp extends React.Component {
     this.state = {
       allBooks: [],
     };
-    this.searchSelect = this.searchSelect.bind(this);
-    this.listSelect = this.listSelect.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentDidMount() {
@@ -26,14 +25,7 @@ export default class BooksApp extends React.Component {
       });
   }
 
-  searchSelect(book, shelf) {
-    const newBooks = this.state.allBooks.slice();
-    book.shelf = shelf;
-    newBooks.push(book);
-    this.setState({allBooks: newBooks});
-  }
-
-  listSelect(book, shelf) {
+  handleSelect(book, shelf) {
     const newBooks = this.state.allBooks.slice();
     const oldBooks = this.state.allBooks.slice();
     const updatededBook = newBooks.find(oldBook => {
@@ -41,6 +33,14 @@ export default class BooksApp extends React.Component {
     });
     if(updatededBook) {
       updatededBook.shelf = shelf;
+      this.setState({allBooks: newBooks});
+      BooksAPI.update(book, shelf)
+        .catch((res) => {
+          this.setState({allBooks: oldBooks});
+        });
+    } else {
+      book.shelf = shelf;
+      newBooks.push(book);
       this.setState({allBooks: newBooks});
       BooksAPI.update(book, shelf)
         .catch((res) => {
@@ -55,18 +55,18 @@ export default class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/search" render={() => (
           <SearchBooks
-            handleSelect={this.searchSelect}
+            handleSelect={this.handleSelect}
           />)}>
         </Route>
         <Route exact path="/" render={() => (
           <ListBooks
             allBooks={allBooks}
-            handleSelect={this.listSelect}
+            handleSelect={this.handleSelect}
           />)}>
         </Route>
         <Route
           path="/books/:bookId"
-          render={(params) => <SingleBook params={params} handleSelect={this.listSelect} />} />
+          render={(params) => <SingleBook params={params} handleSelect={this.handleSelect} />} />
       </div>
     );
   }
