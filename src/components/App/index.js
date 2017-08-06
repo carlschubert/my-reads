@@ -13,7 +13,8 @@ export default class BooksApp extends React.Component {
     this.state = {
       allBooks: [],
     };
-    this.handleSelect = this.handleSelect.bind(this);
+    this.searchSelect = this.searchSelect.bind(this);
+    this.listSelect = this.listSelect.bind(this);
   }
 
   componentDidMount() {
@@ -25,15 +26,27 @@ export default class BooksApp extends React.Component {
       });
   }
 
-  handleSelect(bookId, shelf) {
-    BooksAPI.update(bookId, shelf)
-      .then(() => {
-        const newBooks = this.state.allBooks.slice();
-        newBooks.find(oldBook => {
-          return oldBook.id === bookId;
-        }).shelf = shelf;
-        this.setState({allBooks: newBooks});
-      });
+  searchSelect(book, shelf) {
+    const newBooks = this.state.allBooks.slice();
+    book.shelf = shelf;
+    newBooks.push(book);
+    this.setState({allBooks: newBooks});
+  }
+
+  listSelect(book, shelf) {
+    const newBooks = this.state.allBooks.slice();
+    const oldBooks = this.state.allBooks.slice();
+    const updatededBook = newBooks.find(oldBook => {
+      return oldBook.id === book.id;
+    });
+    if(updatededBook) {
+      updatededBook.shelf = shelf;
+      this.setState({allBooks: newBooks});
+      BooksAPI.update(book, shelf)
+        .catch((res) => {
+          this.setState({allBooks: oldBooks});
+        });
+    }
   }
 
   render() {
@@ -42,19 +55,18 @@ export default class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/search" render={() => (
           <SearchBooks
-            allBooks={allBooks}
-            handleSelect={this.handleSelect}
+            handleSelect={this.searchSelect}
           />)}>
         </Route>
         <Route exact path="/" render={() => (
           <ListBooks
             allBooks={allBooks}
-            handleSelect={this.handleSelect}
+            handleSelect={this.listSelect}
           />)}>
         </Route>
         <Route
           path="/books/:bookId"
-          render={(params) => <SingleBook params={params} handleSelect={this.handleSelect} />} />
+          render={(params) => <SingleBook params={params} handleSelect={this.listSelect} />} />
       </div>
     );
   }

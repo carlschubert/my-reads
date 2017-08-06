@@ -14,7 +14,7 @@ const Book = props => {
     <div
       className="book"
       draggable="true"
-      onDragStart={(e) => drag(e, book.id)}>
+      onDragStart={(e) => drag(e, book)}>
       <div className="book-top">
         <Link
           to={`/books/${book.id}`}
@@ -27,7 +27,7 @@ const Book = props => {
         </Link>
         <div className="book-shelf-changer">
           <select
-            onChange={(e) => handleSelect(book.id, e.target.value)}
+            onChange={(e) => handleSelect(book, e.target.value)}
             value={book.shelf}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>

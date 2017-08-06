@@ -1,35 +1,46 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import escapeRegExp from 'escape-string-regexp';
 
+import * as BooksAPI from '../../BooksAPI';
 import BookShelf from '../BookShelf';
+import SEARCH_TERMS from './SEARCH_TERMS';
 import './search_books.css';
 
 export default class SearchBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: '',
+      selectedBooks: []
     };
+    this.updateQuery = this.updateQuery.bind(this);
   }
 
   updateQuery(query) {
-    this.setState({query: query.trim()});
+    this.setState({
+      query: query
+    });
+
+    if (SEARCH_TERMS.map(str => str.toLowerCase()).includes(query.toLowerCase())) {
+      BooksAPI.search(query, 5)
+        .then(searchResults => {
+          console.log(searchResults);
+          if(!searchResults.error) {
+            this.setState({
+              selectedBooks: searchResults
+            });
+          }
+        });
+    } else {
+      this.setState({
+        selectedBooks: []
+      });
+    }
   }
 
   render() {
-    const {query} = this.state;
-    const {allBooks, handleSelect} = this.props;
-
-    let searchBooks;
-    if (query) {
-      const match = new RegExp(escapeRegExp(query), 'i');
-      searchBooks = allBooks.filter(book => {
-        return match.test(book.title);
-      });
-    } else {
-      searchBooks = allBooks;
-    }
+    const {query, selectedBooks} = this.state;
+    const {handleSelect} = this.props;
 
     return(
       <div className="search-books">
@@ -46,7 +57,7 @@ export default class SearchBooks extends Component {
         <div className="search-books-results">
           <BookShelf
             title="Search Results"
-            shelfBooks={searchBooks}
+            shelfBooks={selectedBooks}
             handleSelect={handleSelect} />
         </div>
       </div>
