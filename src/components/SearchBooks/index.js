@@ -24,7 +24,6 @@ export default class SearchBooks extends Component {
     if (SEARCH_TERMS.map(str => str.toLowerCase()).includes(query.toLowerCase())) {
       BooksAPI.search(query, 5)
         .then(searchResults => {
-          console.log(searchResults);
           if(!searchResults.error) {
             this.setState({
               selectedBooks: searchResults
@@ -50,9 +49,15 @@ export default class SearchBooks extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
+              list="search-terms"
               value={query}
               onChange={(e) => this.updateQuery(e.target.value)} />
           </div>
+          <datalist id="search-terms">
+            {SEARCH_TERMS.map((term, index) => {
+              return (<option key= {index} value={term} />);
+            })}
+          </datalist>
         </div>
         <div className="search-books-results">
           <BookShelf
