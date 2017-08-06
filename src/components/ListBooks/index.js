@@ -33,14 +33,18 @@ const ListBooks = props => {
       <div className="list-books-content">
         <div>
           {titlesOrder.map((shelf, index) => {
-            return(
-              <div key={index}>
-                <BookShelf
-                  title={shelf}
-                  shelfBooks={bookShelf[shelf]}
-                  handleSelect={handleSelect} />
-              </div>
-            );
+            if (shelf !== 'none') {
+              return(
+                <div key={index}>
+                  <BookShelf
+                    title={shelf}
+                    shelfBooks={bookShelf[shelf]}
+                    handleSelect={handleSelect} />
+                </div>
+              );
+            } else {
+              return null;
+            }
           })}
         </div>
       </div>
