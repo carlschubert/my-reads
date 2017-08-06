@@ -40,16 +40,16 @@ export default class BookShelf extends Component {
       // uppercase the first character
       .replace(/^./, first => first.toUpperCase());
 
-    const bookShelfClass = classnames('bookshelf', {
+    const bookShelfClass = classnames('bookshelf-books', {
       'draghover': this.state.dragHover
     });
 
     return(
       <div
-        className={bookShelfClass}>
+        className="bookshelf">
         <h2 className="bookshelf-title">{regularTitle}</h2>
         <div
-          className="bookshelf-books"
+          className={bookShelfClass}
           onDragOver={(e) => {
             e.preventDefault();
             this.onDragOver();
