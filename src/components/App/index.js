@@ -8,13 +8,9 @@ import SearchBooks from '../SearchBooks';
 import SingleBook from '../SingleBook';
 
 export default class BooksApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      allBooks: [],
-    };
-    this.handleSelect = this.handleSelect.bind(this);
-  }
+  state = {
+    allBooks: [],
+  };
 
   componentDidMount() {
     BooksAPI.getAll()
@@ -25,7 +21,7 @@ export default class BooksApp extends React.Component {
       });
   }
 
-  handleSelect(book, shelf) {
+  handleSelect = (book, shelf) => {
     const newBooks = this.state.allBooks.slice();
     const oldBooks = this.state.allBooks.slice();
     const updatededBook = newBooks.find(oldBook => {

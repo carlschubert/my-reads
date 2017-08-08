@@ -7,16 +7,13 @@ import SEARCH_TERMS from './SEARCH_TERMS';
 import './search_books.css';
 
 export default class SearchBooks extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: '',
-      selectedBooks: []
-    };
-    this.updateQuery = this.updateQuery.bind(this);
-  }
+  state = {
+    query: '',
+    selectedBooks: []
+  };
 
-  updateQuery(query) {
+  updateQuery = (event) => {
+    const query = event.target.value;
     this.setState({
       query: query
     });
@@ -51,7 +48,7 @@ export default class SearchBooks extends Component {
               placeholder="Search by title or author"
               list="search-terms"
               value={query}
-              onChange={(e) => this.updateQuery(e.target.value)} />
+              onChange={this.updateQuery} />
           </div>
           <datalist id="search-terms">
             {SEARCH_TERMS.map((term, index) => {
