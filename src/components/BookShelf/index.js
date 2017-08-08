@@ -5,28 +5,23 @@ import Book from '../Book';
 import './book_shelf.css';
 
 export default class BookShelf extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dragHover: false
-    };
-    this.onDragEnd = this.onDragEnd.bind(this);
-    this.onDragOver = this.onDragOver.bind(this);
-  }
+  state = {
+    dragHover: false
+  };
 
-  onDrop(event, shelf) {
+  onDrop = (event, shelf) => {
     const book = JSON.parse(event.dataTransfer.getData('text'));
     this.props.handleSelect(book, shelf);
     this.onDragEnd();
   }
 
-  onDragEnd() {
+  onDragEnd = () => {
     this.setState({
       dragHover: false
     });
   }
 
-  onDragOver() {
+  onDragOver = () => {
     this.setState({
       dragHover: true
     });
