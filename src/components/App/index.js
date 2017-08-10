@@ -22,26 +22,16 @@ export default class BooksApp extends React.Component {
   }
 
   handleSelect = (book, shelf) => {
-    const newBooks = this.state.allBooks.slice();
-    const oldBooks = this.state.allBooks.slice();
-    const updatededBook = newBooks.find(oldBook => {
-      return oldBook.id === book.id;
-    });
-    if(updatededBook) {
-      updatededBook.shelf = shelf;
-      this.setState({allBooks: newBooks});
-      BooksAPI.update(book, shelf)
-        .catch((res) => {
-          this.setState({allBooks: oldBooks});
-        });
-    } else {
+    if (book.shelf !== shelf) {
+      const oldBooks = this.state.allBooks.slice();
       book.shelf = shelf;
-      newBooks.push(book);
-      this.setState({allBooks: newBooks});
-      BooksAPI.update(book, shelf)
-        .catch((res) => {
-          this.setState({allBooks: oldBooks});
-        });
+      // set state immediately to avoid server delay but roll back if the update fails
+      this.setState(state => ({
+        books: state.allBooks.filter(b => b.id !== book.id).concat([book])
+      }));
+      BooksAPI.update(book, shelf).catch(() => {
+        this.setState(oldBooks);
+      });
     }
   }
 
