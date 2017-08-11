@@ -22,8 +22,11 @@ export default class SearchBooks extends Component {
       BooksAPI.search(query, 5)
         .then(searchResults => {
           if(!searchResults.error) {
+            const allBookIds = this.props.allBooks.map(book => book.id);
             this.setState({
-              selectedBooks: searchResults
+              selectedBooks: searchResults.filter(searchBook => {
+                return !allBookIds.includes(searchBook.id);
+              })
             });
           }
         });

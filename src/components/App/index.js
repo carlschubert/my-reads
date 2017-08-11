@@ -43,6 +43,8 @@ export default class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/search" render={() => (
           <SearchBooks
+            allBooks={allBooks}
+            updateBooks={this.updateBooks}
             handleSelect={this.handleSelect}
           />)}>
         </Route>
