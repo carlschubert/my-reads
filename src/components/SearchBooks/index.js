@@ -26,6 +26,9 @@ export default class SearchBooks extends Component {
             this.setState({
               selectedBooks: searchResults.filter(searchBook => {
                 return !allBookIds.includes(searchBook.id);
+              }).map(searchBook => {
+                searchBook.shelf = 'none';
+                return searchBook;
               })
             });
           }
