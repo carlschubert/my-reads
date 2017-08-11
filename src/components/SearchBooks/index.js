@@ -37,9 +37,15 @@ export default class SearchBooks extends Component {
     }
   }
 
+  handleSearchSelect = (book, shelf) => {
+    this.props.handleSelect(book, shelf);
+    this.setState(state => ({
+      selectedBooks: state.selectedBooks.filter(b => b.id !== book.id)
+    }));
+  }
+
   render() {
     const {query, selectedBooks} = this.state;
-    const {handleSelect} = this.props;
 
     return(
       <div className="search-books">
@@ -63,7 +69,7 @@ export default class SearchBooks extends Component {
           <BookShelf
             title="Search Results"
             shelfBooks={selectedBooks}
-            handleSelect={handleSelect} />
+            handleSelect={this.handleSearchSelect} />
         </div>
       </div>
     );
