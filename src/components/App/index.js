@@ -21,13 +21,15 @@ export default class BooksApp extends React.Component {
       });
   }
 
+
+
   handleSelect = (book, shelf) => {
     if (book.shelf !== shelf) {
       const oldBooks = this.state.allBooks.slice();
       book.shelf = shelf;
       // set state immediately to avoid server delay but roll back if the update fails
       this.setState(state => ({
-        books: state.allBooks.filter(b => b.id !== book.id).concat([book])
+        allBooks: state.allBooks.filter(b => b.id !== book.id).concat([book])
       }));
       BooksAPI.update(book, shelf).catch(() => {
         this.setState(oldBooks);
